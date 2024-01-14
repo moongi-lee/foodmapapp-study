@@ -4,7 +4,7 @@ import {Dispatch, SetStateAction} from "react";
 
 interface MakersProps {
   map: any;
-  stores: any[];
+  stores: StoreType[];
   setCurrentStore: Dispatch<SetStateAction<any>>
 }
 
@@ -15,8 +15,8 @@ export default function Markers({map, stores, setCurrentStore}: MakersProps) {
 
       // 식당 데이터 마커 띄우기
       stores?.map((store) => {
-        var imageSrc = store?.bizcnd_code_nm
-            ? `/images/markers/${store?.bizcnd_code_nm}.png`
+        var imageSrc = store?.category
+            ? `/images/markers/${store?.category}.png`
             : `/images/markers/default.png`,
           imageSize = new window.kakao.maps.Size(40, 40),
           imageOption = { offset: new window.kakao.maps.Point(27, 69) };
@@ -28,8 +28,8 @@ export default function Markers({map, stores, setCurrentStore}: MakersProps) {
           imageOption,
         );
         var markerPosition = new window.kakao.maps.LatLng(
-          store?.y_dnts,
-          store?.x_cnts,
+          store?.lat,
+          store?.lng,
         );
 
         // 마커를 생성합니다
@@ -41,7 +41,7 @@ export default function Markers({map, stores, setCurrentStore}: MakersProps) {
         marker.setMap(map);
 
         // 커서 오버시 윈포 인도우 생성
-        var content = `<div class="infowindow">${store?.upso_nm}</div>`;
+        var content = `<div class="infowindow">${store?.name}</div>`;
 
         // 커스텀 오버레이를 생성합니다
         var customOverlay = new window.kakao.maps.CustomOverlay({

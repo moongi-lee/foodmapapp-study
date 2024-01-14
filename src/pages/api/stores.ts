@@ -1,11 +1,35 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { StoreType } from '@/interface'
+import { StoreApiResponse, StoreType } from '@/interface'
+import { PrismaClient } from '@prisma/client'
 
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<StoreType[]>
+  res: NextApiResponse<StoreApiResponse | StoreType[]>
 ) {
-  const stores = (await import('../../data/store_data.json'))["DATA"] as StoreType[];
-  res.status(200).json(stores);
+  const { page = "" }:{ page?: string } = req.query;
+  const prisma = new PrismaClient();
+
+  console.log(page)
+
+  if (page) {
+    const count = await prisma.store.count();
+    const skipPage = parseInt(page) - 1 ;
+    const stores = await prisma.store.findMany({
+      orderBy: {id:"asc"},
+      take: 10,
+      skip: skipPage * 10,
+    });
+    // totalpage, data, page, totalCount
+    res.status(200).json({
+      page: parseInt(page),
+      data: stores,
+      totalCount: count,
+      totalPage: Math.ceil(count / 10),
+    });
+
+  } else {
+    const stores = await prisma.store.findMany();
+    res.status(200).json(stores);
+  }
 }

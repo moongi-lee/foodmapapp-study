@@ -12,6 +12,7 @@ export default function Navbar() {
           <Link href="/" className="navbar__logo">nextmap</Link>
           <div className="navbar__list">
             <Link href="/stores/" className="navbar__list--item">맛집 목록</Link>
+            <Link href="/stores/infinite" className="navbar__list--item">맛집 목록 - 무한</Link>
             <Link href="/stores/new" className="navbar__list--item">맛집 등록</Link>
             <Link href="/users/likes" className="navbar__list--item">찜한 가게</Link>
             <Link href="/users/login" className="navbar__list--item">로그인</Link>
