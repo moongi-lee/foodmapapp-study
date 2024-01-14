@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'BeminDohyeon';
+  src: url('../../public/font/BMDOHYEON_ttf.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
 /* navbar */
 
 .navbar {
@@ -72,4 +87,10 @@
   .navbar__list--mobile {
     @apply flex flex-col gap-4 items-start px-[18px] py-[24px];
   }
+}
+
+/* Map */
+
+.infowindow {
+  @apply bg-blue-900 text-white block text-sm text-center h-6 rounded-sm px-2 leading-6;
 }
