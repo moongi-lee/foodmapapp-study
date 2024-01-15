@@ -4,10 +4,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loading from "@/components/Loading";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import Pagenation from "@/components/Pagenation";
-import { useInfiniteQuery } from 'react-query'
-import {getNextPageParam} from "react-query/types/core/infiniteQueryBehavior";
 
 
 export default function StoreListPage() {

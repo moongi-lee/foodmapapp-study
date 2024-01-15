@@ -1,22 +1,19 @@
 import {useCallback, useEffect} from "react";
 import {StoreType} from "@/interface";
-import {useRecoilValue, useSetRecoilState} from "recoil";
-import {currentStoreState, locationState, mapState} from "@/atom";
+import { useRecoilValue } from "recoil";
+import {mapState} from "@/atom";
 
 interface MakersProps {
-  stores: StoreType[];
+  store: StoreType;
 }
 
-export default function Markers({ stores }: MakersProps) {
+export default function Marker({store}: MakersProps) {
   const map = useRecoilValue(mapState);
-  const setCurrentStore = useSetRecoilState(currentStoreState);
-  const setLocation = useSetRecoilState(locationState);
 
-  const loadkakaoMakers = useCallback(()=>{
-    if(map){
+  const loadkakaoMaker = useCallback(()=>{
+    if(map && store){
 
-      // 식당 데이터 마커 띄우기
-      stores?.map((store) => {
+        // 현재 선택한 식당 데이터 마커 띄우기
         var imageSrc = store?.category
             ? `/images/markers/${store?.category}.png`
             : `/images/markers/default.png`,
@@ -64,25 +61,15 @@ export default function Markers({ stores }: MakersProps) {
             // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
             customOverlay.setMap(null);
         });
-
-        // 선택한 식당 정보 저장.
-
-        window.kakao.maps.event.addListener(marker, 'click', function(){
-          setCurrentStore(store);
-          setLocation({
-            ...location,
-            lat: store.lat,
-            lng: store.lng,
-          });
-        })
-    });
-  // eslint-disable-next-line
-  }
-}, [map, stores]);
+  }}, [map, store]);
 
   useEffect(()=>{
-    loadkakaoMakers();
-  }, [loadkakaoMakers,map])
-  
-  return <></>;
+    loadkakaoMaker();
+  }, [loadkakaoMaker,map])
+
+  return (
+      <>
+
+      </>
+  )
 }
